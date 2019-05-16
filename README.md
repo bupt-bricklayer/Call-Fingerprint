@@ -52,3 +52,13 @@ Call-Fingerprint
 - 通话时长：分为十个维度区分不同的通话时长。
 - 通话开始时间：全天分为四个时段、全月分为上中下旬进行统计。
 - 漫游地区号和对端号码归属区号：由于用户通话位置的确定性，这两个属性少有变动，只需计算其异常率即可。
+
+并且对比了不依据该原则的一些其它特征提取方法，发现这些方法在距离对比上明显劣势，故采用该特征提取方法，并采用不同的提取参数进行方案设计。  
+下面介绍具体的提取方案。根据以上原则，我们进行手工的特征提取，提取出后每个月数据共有一千个用户，即一千行，并设计了以下字段：  
+fre1_num4	call_fre1	fre2_num4	call_fre2	fre3_num4	call_fre3	fre4_num4	call_fre4	fre5_num4	call_fre5	lacfre1_num4	lac_fre1	lacfre2_num4	lac_fre2	lacfre3_num4	lac_fre3	cefre1_num4	cellid_fre1	cefre2_num4	cellid_fre2	cefre3_num4	cellid_fre3	T1_fre	T2_fre	T3_fre	T4_fre	T5_fre	T6_fre	early_fre	late_fre	mid_term_fre	opp_attr_code_ur	roam_code_ur	single_num	call_type1	call_type2	dur_type120<x<=150	dur_type150<x<=180	dur_type180<x<=210	dur_type210<x<=240	dur_type240<x<=270	dur_type30<x<=60	dur_type60<x<=90	dur_type90<x<=120	dur_typex<=30	dur_typex>270	longdis_type0	longdis_type2	longdis_type3	longdis_type4	longdis_type5	opp_operator0	opp_operator1	opp_operator2	opp_operator3	opp_operator4	roam_type0	roam_type1	roam_type4	roam_type5  
+其中，fre(x)_num4是指对端通话出现频率高低排序第x个的用户号码后四位；call_fre(x)是对应于前一个字段，指出现频率高低排序第x个用户的次数；lacfre(x)_num4和lac_fre(x)、T(x)_fre、cellid_fre(x),cefre(x)_num4字段同理；single_num字段代表通话次数；dur_type代表通话持续时间，该类项用于统计其不同通话时间出现的次数；后面的字段均为统计类别出现的次数。  
+经过这样的提取后，我们得到的特征库如图六所示。  
+****
+![](https://github.com/bupt-bricklayer/Call-Fingerprint/raw/master/picture/图六  手工提取的呼叫指纹库数据.png)  
+图六 手工提取的呼叫指纹库数据
+****
